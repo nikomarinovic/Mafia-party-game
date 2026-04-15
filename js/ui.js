@@ -23,15 +23,8 @@ let setupNames = Array(6).fill('');
 // Role reveal state
 let roleRevealed = false;
 
-let state = {
-  phase: 'setup',
-  players: [],
-  revealIndex: 0,
-  round: 1,
-  hasDetective: true,
-  eliminatedTonight: null,
-  votes: {}
-};
+// `state` is defined in js/game.js (created by createInitialState).
+// Do not redeclare it here to avoid a duplicate declaration error.
 
 function render() {
   // Hide all screens
