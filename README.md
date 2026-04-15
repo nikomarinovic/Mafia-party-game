@@ -60,16 +60,6 @@ Mafia Party Game is designed to be used on **one shared mobile device** as a hel
   <img src="public/screenshot-1.png" alt="Mafia Party Game Screenshot 1" width="700" />
 </p>
 
-
-<p align="center">
-  <img src="public/screenshot-2.png" alt="Mafia Party Game Screenshot 2" width="700" />
-</p>
-
-
-<p align="center">
-  <img src="public/screenshot-3.png" alt="Mafia Party Game Screenshot 3" width="700" />
-</p>
-
 ---
 
 ## Data & Privacy
