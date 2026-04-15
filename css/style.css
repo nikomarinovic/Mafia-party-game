@@ -555,3 +555,54 @@ input {
   .role-circle { width: 5rem; height: 5rem; }
   .screen { padding: 1rem; }
 }
+<<<<<<< HEAD
+=======
+/* ===================== FOOTER ===================== */
+.setup-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  color: var(--muted-foreground);
+}
+
+.footer-contributors {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+}
+
+.footer-made-by {
+  opacity: 0.7;
+}
+
+.footer-amp {
+  opacity: 0.7;
+  font-size: 0.65rem;
+}
+
+.footer-gh-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  text-decoration: none;
+  color: inherit;
+  font-weight: 500;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.footer-gh-link:hover {
+  opacity: 1;
+}
+
+.footer-copy {
+  font-size: 0.65rem;
+  opacity: 0.7;
+  letter-spacing: 0.05em;
+}
+>>>>>>> 899e0a3 (Updated UI)
