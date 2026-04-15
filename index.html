@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>MAFIA — Pass & Play</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<div id="app">
+
+  <!-- ==================== SETUP ==================== -->
+  <div id="screen-setup" class="screen active" style="justify-content:center; padding-top:2rem; padding-bottom:2rem;">
+    <div style="width:100%; max-width:24rem; animation: fadeIn 0.35s ease;">
+
+      <div class="flex items-center justify-center gap-3 mb-2">
+        <span class="icon-lg" style="color:var(--role-mafia);">
+          <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/><line x1="13" y1="19" x2="15" y2="17"/><line x1="16" y1="16" x2="20" y2="20"/><line x1="19" y1="21" x2="21" y2="19"/></svg>
+        </span>
+        <h1 class="display-font text-role-mafia" style="font-size:2.75rem; letter-spacing:0.15em; font-weight:700;">MAFIA</h1>
+      </div>
+      <p class="text-xs tracking-widest uppercase text-center mb-8" style="color:var(--muted-foreground);">Pass & Play</p>
+
+      <div id="setup-content"></div>
+    </div>
+  </div>
+
+  <!-- ==================== ROLE REVEAL ==================== -->
+  <div id="screen-role-reveal" class="screen" style="justify-content:center; min-height:100vh;">
+    <p id="reveal-progress" class="text-xs uppercase tracking-widest mb-8" style="color:var(--muted-foreground);"></p>
+    <div id="role-reveal-content" style="display:flex;flex-direction:column;align-items:center;width:100%;max-width:24rem;"></div>
+  </div>
+
+  <!-- ==================== NIGHT ==================== -->
+  <div id="screen-night" class="screen night-bg" style="padding-top:3rem; padding-bottom:2rem;">
+    <div style="width:100%; max-width:24rem;">
+      <div class="flex items-center justify-center gap-2 mb-1">
+        <span class="icon-lg" style="color:var(--accent);">
+          <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </span>
+        <h2 id="night-round" class="text-3xl font-bold display-font text-accent"></h2>
+      </div>
+      <p class="text-sm text-center mb-8" style="color:var(--muted-foreground);">Players discuss in secret. Enter the results below.</p>
+
+      <div class="space-y">
+        <!-- Mafia -->
+        <div>
+          <div class="section-label text-role-mafia">
+            <span class="icon" style="width:1rem;height:1rem;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/><line x1="13" y1="19" x2="15" y2="17"/><line x1="16" y1="16" x2="20" y2="20"/><line x1="19" y1="21" x2="21" y2="19"/></svg>
+            </span>
+            Mafia Target <span style="color:var(--destructive);margin-left:2px;">*</span>
+          </div>
+          <div id="night-mafia-grid" class="grid-3"></div>
+        </div>
+
+        <!-- Doctor -->
+        <div>
+          <div class="section-label text-role-doctor">
+            <span class="icon" style="width:1rem;height:1rem;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M3.22 12H9.5l.44-1.77 2.09 5.72.91-2.5 2.02-4.86.67 1.41H21"/></svg>
+            </span>
+            Doctor Save <span style="color:var(--muted-foreground);font-weight:400;font-size:0.75rem;margin-left:4px;">(optional)</span>
+          </div>
+          <div id="night-doctor-grid" class="grid-3"></div>
+        </div>
+
+        <!-- Detective -->
+        <div id="night-detective-section">
+          <div class="section-label text-role-detective">
+            <span class="icon" style="width:1rem;height:1rem;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </span>
+            Detective Check <span style="color:var(--muted-foreground);font-weight:400;font-size:0.75rem;margin-left:4px;">(optional)</span>
+          </div>
+          <div id="night-detective-grid" class="grid-3"></div>
+        </div>
+
+        <button id="btn-resolve-night" class="btn btn-primary" disabled>
+          <span class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v8"/><path d="m4.93 10.93 1.41 1.41"/><path d="M2 18h2"/><path d="M20 18h2"/><path d="m19.07 10.93-1.41 1.41"/><path d="M22 22H2"/><path d="m8 6 4-4 4 4"/><path d="M16 18a4 4 0 0 0-8 0"/></svg>
+          </span>
+          RESOLVE NIGHT
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== DAY ==================== -->
+  <div id="screen-day" class="screen" style="padding-top:3rem; padding-bottom:2rem; align-items:center;">
+    <div style="width:100%; max-width:24rem;">
+      <div class="flex items-center justify-center gap-2 mb-1">
+        <span class="icon-lg" style="color:var(--accent);">
+          <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        </span>
+        <h2 id="day-round" class="text-3xl font-bold display-font text-accent"></h2>
+      </div>
+
+      <div id="day-elim-card" class="elim-card"></div>
+
+      <div style="width:100%; margin-bottom:1.5rem;">
+        <p id="day-alive-count" class="text-xs uppercase tracking-widest mb-3 text-center" style="color:var(--muted-foreground);"></p>
+        <div id="day-alive-grid" class="grid-3"></div>
+      </div>
+
+      <div class="space-y">
+        <div class="timer-card">
+          <div class="flex items-center gap-3">
+            <span class="icon" style="color:var(--muted-foreground);">
+              <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="10" y1="2" x2="14" y2="2"/><line x1="12" y1="14" x2="12" y2="8"/><circle cx="12" cy="14" r="8"/></svg>
+            </span>
+            <div>
+              <p style="font-size:0.875rem; font-weight:500;">Discussion Timer</p>
+              <p id="timer-display" class="timer-display">1:30</p>
+            </div>
+          </div>
+          <button id="btn-timer-toggle" class="btn-secondary flex items-center gap-2">
+            <span class="icon" style="width:1rem;height:1rem;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </span>
+            Start
+          </button>
+        </div>
+
+        <button id="btn-start-voting" class="btn btn-primary">
+          <span class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 12 2 2 4-4"/><path d="M5 7c0-1.1.9-2 2-2h10a2 2 0 0 1 2 2v12H5V7z"/><path d="M22 19H2"/></svg>
+          </span>
+          START VOTING
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== VOTING ==================== -->
+  <div id="screen-voting" class="screen" style="padding-top:3rem; padding-bottom:2rem; align-items:center;">
+    <div style="width:100%; max-width:24rem;">
+      <div class="flex items-center justify-center gap-2 mb-1">
+        <span class="icon-lg" style="color:var(--accent);">
+          <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 12 2 2 4-4"/><path d="M5 7c0-1.1.9-2 2-2h10a2 2 0 0 1 2 2v12H5V7z"/><path d="M22 19H2"/></svg>
+        </span>
+        <h2 class="text-2xl font-bold display-font text-accent">Voting</h2>
+      </div>
+      <p id="voting-progress" class="text-sm mb-6" style="color:var(--muted-foreground); text-align:center;"></p>
+
+      <div class="card-lg mb-6 text-center">
+        <p id="voting-voter-name" class="font-bold text-lg"></p>
+        <p class="text-xs" style="color:var(--muted-foreground);">Who do you vote to eliminate?</p>
+      </div>
+
+      <div id="voting-grid" class="grid-2 mb-8"></div>
+
+      <button id="btn-confirm-vote" class="btn btn-primary" disabled>
+        <span class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </span>
+        CONFIRM VOTE
+      </button>
+    </div>
+  </div>
+
+  <!-- ==================== VOTE RESULT ==================== -->
+  <div id="screen-vote-result" class="screen" style="justify-content:center; padding-top:2rem; padding-bottom:2rem;">
+    <div style="width:100%; max-width:24rem; display:flex; flex-direction:column; align-items:center;">
+      <div class="flex items-center gap-2 mb-6">
+        <span class="icon-lg" style="color:var(--accent);">
+          <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+        </span>
+        <h2 class="text-3xl font-bold display-font text-accent">Vote Results</h2>
+      </div>
+
+      <div id="vote-tally" class="space-y w-full mb-8"></div>
+
+      <div id="voteresult-elim-card" class="elim-card w-full"></div>
+
+      <button id="btn-proceed-night" class="btn btn-primary animate-pulse-glow" style="margin-top:2rem;">
+        <span class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </span>
+        PROCEED TO NIGHT
+      </button>
+    </div>
+  </div>
+
+  <!-- ==================== GAME OVER ==================== -->
+  <div id="screen-game-over" class="screen" style="justify-content:center; padding-top:2rem; padding-bottom:2rem;">
+    <div style="width:100%; max-width:24rem; display:flex; flex-direction:column; align-items:center;">
+      <div style="text-align:center; margin-bottom:2rem; animation: scaleInSpring 0.8s ease;">
+        <span id="gameover-icon" class="icon-2xl" style="display:block;margin:0 auto 1rem;"></span>
+        <h1 id="gameover-title" class="display-font font-black tracking-widest" style="font-size:2.25rem;"></h1>
+        <p id="gameover-subtitle" style="color:var(--muted-foreground);margin-top:0.5rem;"></p>
+      </div>
+
+      <div style="width:100%; margin-bottom:2rem;">
+        <p class="text-xs uppercase tracking-widest mb-3 text-center" style="color:var(--muted-foreground);">All Roles Revealed</p>
+        <div id="gameover-players" class="space-y"></div>
+      </div>
+
+      <button id="btn-play-again" class="btn btn-primary">
+        <span class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.95"/></svg>
+        </span>
+        PLAY AGAIN
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<script src="js/icons.js"></script>
+<script src="js/game.js"></script>
+<script src="js/ui.js"></script>
+</body>
+</html>

@@ -1,0 +1,557 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --background: hsl(230, 25%, 7%);
+  --foreground: hsl(220, 20%, 90%);
+  --card: hsl(230, 20%, 11%);
+  --card-foreground: hsl(220, 20%, 90%);
+  --primary: hsl(0, 72%, 51%);
+  --primary-foreground: hsl(0, 0%, 100%);
+  --secondary: hsl(230, 15%, 18%);
+  --secondary-foreground: hsl(220, 20%, 85%);
+  --muted: hsl(230, 15%, 15%);
+  --muted-foreground: hsl(220, 10%, 50%);
+  --accent: hsl(45, 90%, 55%);
+  --accent-foreground: hsl(230, 25%, 7%);
+  --destructive: hsl(0, 84%, 60%);
+  --destructive-foreground: hsl(0, 0%, 100%);
+  --border: hsl(230, 15%, 20%);
+  --role-mafia: hsl(0, 72%, 51%);
+  --role-detective: hsl(220, 80%, 55%);
+  --role-doctor: hsl(150, 60%, 45%);
+  --role-civilian: hsl(220, 20%, 70%);
+  --gradient-mafia: linear-gradient(135deg, hsl(0, 72%, 51%), hsl(340, 70%, 40%));
+  --gradient-detective: linear-gradient(135deg, hsl(220, 80%, 55%), hsl(250, 60%, 50%));
+  --gradient-doctor: linear-gradient(135deg, hsl(150, 60%, 45%), hsl(170, 50%, 40%));
+  --gradient-civilian: linear-gradient(135deg, hsl(220, 20%, 50%), hsl(230, 15%, 40%));
+  --gradient-night: linear-gradient(180deg, hsl(230, 30%, 5%), hsl(250, 25%, 12%));
+  --shadow-glow-red: 0 0 40px hsl(0, 72%, 51%, 0.3);
+  --shadow-glow-blue: 0 0 40px hsl(220, 80%, 55%, 0.3);
+  --shadow-glow-green: 0 0 40px hsl(150, 60%, 45%, 0.3);
+  --font-display: 'Cinzel', serif;
+  --font-body: 'Inter', sans-serif;
+  --radius: 0.75rem;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border-color: var(--border);
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+}
+
+button {
+  cursor: pointer;
+  font-family: var(--font-body);
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+input {
+  font-family: var(--font-body);
+}
+
+#app {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* ===================== SCREEN ===================== */
+.screen {
+  display: none;
+  min-height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem;
+  animation: fadeIn 0.3s ease;
+}
+
+.screen.active {
+  display: flex;
+}
+
+.screen.night-bg {
+  background: var(--gradient-night);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.85); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes scaleInSpring {
+  0% { opacity: 0; transform: scale(0.5); }
+  60% { transform: scale(1.05); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+@keyframes wipe {
+  0% { opacity: 1; }
+  50% { opacity: 0; transform: scale(0.98); }
+  100% { opacity: 1; }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* ===================== TYPOGRAPHY ===================== */
+.display-font { font-family: var(--font-display); }
+.text-accent { color: var(--accent); }
+.text-muted { color: var(--muted-foreground); }
+.text-destructive { color: var(--destructive); }
+.text-foreground { color: var(--foreground); }
+.text-role-mafia { color: var(--role-mafia); }
+.text-role-detective { color: var(--role-detective); }
+.text-role-doctor { color: var(--role-doctor); }
+.text-role-civilian { color: var(--role-civilian); }
+
+.text-xs { font-size: 0.75rem; }
+.text-sm { font-size: 0.875rem; }
+.text-lg { font-size: 1.125rem; }
+.text-2xl { font-size: 1.5rem; }
+.text-3xl { font-size: 1.875rem; }
+.text-4xl { font-size: 2.25rem; }
+.text-5xl { font-size: 3rem; }
+
+.font-medium { font-weight: 500; }
+.font-bold { font-weight: 700; }
+.font-black { font-weight: 900; }
+
+.uppercase { text-transform: uppercase; }
+.tracking-wide { letter-spacing: 0.05em; }
+.tracking-wider { letter-spacing: 0.1em; }
+.tracking-widest { letter-spacing: 0.2em; }
+
+/* ===================== LAYOUT ===================== */
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.gap-1 { gap: 0.25rem; }
+.gap-2 { gap: 0.5rem; }
+.gap-3 { gap: 0.75rem; }
+.gap-4 { gap: 1rem; }
+.text-center { text-align: center; }
+.w-full { width: 100%; }
+.max-w-sm { max-width: 24rem; }
+.mx-auto { margin-left: auto; margin-right: auto; }
+.mb-1 { margin-bottom: 0.25rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-3 { margin-bottom: 0.75rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mb-6 { margin-bottom: 1.5rem; }
+.mb-8 { margin-bottom: 2rem; }
+.mt-1 { margin-top: 0.25rem; }
+.mt-2 { margin-top: 0.5rem; }
+.mt-4 { margin-top: 1rem; }
+.flex-1 { flex: 1; }
+
+/* ===================== CARDS / SURFACES ===================== */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+}
+
+.card-lg {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 1.5rem;
+}
+
+/* ===================== BUTTONS ===================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: var(--radius);
+  font-weight: 700;
+  font-size: 1.125rem;
+  letter-spacing: 0.05em;
+  transition: opacity 0.15s, transform 0.15s;
+  padding: 1.25rem;
+  width: 100%;
+}
+
+.btn:hover { opacity: 0.9; }
+.btn:active { transform: scale(0.98); }
+
+.btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.btn-secondary {
+  background: var(--secondary);
+  color: var(--secondary-foreground);
+  font-size: 0.875rem;
+  padding: 0.5rem 1rem;
+  width: auto;
+}
+
+.btn-accent {
+  background: var(--accent);
+  color: var(--accent-foreground);
+}
+
+.btn-icon {
+  width: 3rem;
+  height: 3rem;
+  padding: 0;
+  border-radius: var(--radius);
+  background: var(--secondary);
+  color: var(--foreground);
+  font-size: 1.25rem;
+}
+
+/* ===================== GRID ===================== */
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+/* ===================== PLAYER CARD ===================== */
+.player-btn {
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border);
+  background: var(--card);
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.15s;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--foreground);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.player-btn:hover {
+  border-color: var(--muted-foreground);
+}
+
+.player-btn.selected-mafia {
+  border-color: var(--role-mafia);
+  background: rgba(204, 36, 29, 0.2);
+  transform: scale(1.05);
+}
+
+.player-btn.selected-doctor {
+  border-color: var(--role-doctor);
+  background: rgba(72, 187, 120, 0.2);
+  transform: scale(1.05);
+}
+
+.player-btn.selected-detective {
+  border-color: var(--role-detective);
+  background: rgba(59, 130, 246, 0.2);
+  transform: scale(1.05);
+}
+
+.player-btn.selected-vote {
+  border-color: var(--accent);
+  background: rgba(234, 179, 8, 0.2);
+  transform: scale(1.05);
+}
+
+/* ===================== ICONS (SVG inline) ===================== */
+.icon {
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+}
+
+.icon-lg { width: 1.75rem; height: 1.75rem; }
+.icon-xl { width: 2.5rem; height: 2.5rem; }
+.icon-2xl { width: 4rem; height: 4rem; }
+
+/* ===================== ROLE ICON CIRCLE ===================== */
+.role-circle {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.role-circle.mafia { background: var(--gradient-mafia); box-shadow: var(--shadow-glow-red); }
+.role-circle.detective { background: var(--gradient-detective); box-shadow: var(--shadow-glow-blue); }
+.role-circle.doctor { background: var(--gradient-doctor); box-shadow: var(--shadow-glow-green); }
+.role-circle.civilian { background: var(--gradient-civilian); }
+
+/* ===================== ELIMINATION CARD ===================== */
+.elim-card {
+  width: 100%;
+  max-width: 24rem;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  text-align: center;
+  margin: 1.5rem 0;
+  animation: scaleIn 0.3s ease;
+}
+
+.elim-card.killed {
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  background: rgba(239, 68, 68, 0.1);
+}
+
+.elim-card.saved {
+  border: 1px solid var(--border);
+  background: var(--card);
+}
+
+/* ===================== TIMER ===================== */
+.timer-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  width: 100%;
+}
+
+.timer-display {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.timer-display.danger { color: var(--destructive); }
+
+/* ===================== INPUT ===================== */
+.input-field {
+  flex: 1;
+  background: var(--secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
+  color: var(--foreground);
+  font-size: 1rem;
+  outline: none;
+  transition: box-shadow 0.15s;
+}
+
+.input-field::placeholder { color: var(--muted-foreground); }
+.input-field:focus { box-shadow: 0 0 0 2px rgba(204, 36, 29, 0.5); }
+
+/* ===================== SETUP SCREEN ===================== */
+#screen-setup {
+  justify-content: center;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.player-count-control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.count-display {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--accent);
+  width: 4rem;
+  text-align: center;
+}
+
+/* ===================== NAMES LIST ===================== */
+.names-list {
+  max-height: 50vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-right: 0.25rem;
+}
+
+.name-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.name-index {
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  width: 1.5rem;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* ===================== BACK BUTTON ===================== */
+.back-btn {
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  background: none;
+  border: none;
+  transition: color 0.15s;
+  align-self: flex-start;
+}
+
+.back-btn:hover { color: var(--foreground); }
+
+/* ===================== ROLE REVEAL ===================== */
+#screen-role-reveal {
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.reveal-hidden, .reveal-shown {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  animation: fadeIn 0.25s ease;
+}
+
+.hidden-circle {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  background: var(--secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+/* ===================== ALIVE GRID ===================== */
+.alive-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.75rem;
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ===================== GAME OVER ===================== */
+.player-role-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border);
+  background: var(--card);
+}
+
+.player-role-row.dead {
+  border-color: rgba(230, 15%, 20%, 0.5);
+  background: rgba(230, 20%, 11%, 0.5);
+  opacity: 0.5;
+}
+
+/* ===================== VOTE TALLY ===================== */
+.vote-tally-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+}
+
+/* ===================== SECTION LABEL ===================== */
+.section-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ===================== SPACE ===================== */
+.space-y > * + * { margin-top: 0.75rem; }
+.space-y-sm > * + * { margin-top: 0.5rem; }
+.space-y-lg > * + * { margin-top: 1.5rem; }
+.pt-12 { padding-top: 3rem; }
+.pb-8 { padding-bottom: 2rem; }
+
+/* ===================== SCROLLBAR ===================== */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+/* ===================== MEDIA ===================== */
+@media (max-width: 480px) {
+  .text-5xl { font-size: 2.25rem; }
+  .text-4xl { font-size: 1.875rem; }
+  .text-3xl { font-size: 1.5rem; }
+  .count-display { font-size: 2.5rem; }
+  .role-circle { width: 5rem; height: 5rem; }
+  .screen { padding: 1rem; }
+}
