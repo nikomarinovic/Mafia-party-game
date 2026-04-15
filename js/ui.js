@@ -23,6 +23,16 @@ let setupNames = Array(6).fill('');
 // Role reveal state
 let roleRevealed = false;
 
+let state = {
+  phase: 'setup',
+  players: [],
+  revealIndex: 0,
+  round: 1,
+  hasDetective: true,
+  eliminatedTonight: null,
+  votes: {}
+};
+
 function render() {
   // Hide all screens
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));

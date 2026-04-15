@@ -9,10 +9,6 @@ function assignRoles(playerNames) {
   if (hasDetective) roles.push('detective');
   roles.push('doctor');
   while (roles.length < count) roles.push('civilian');
-<<<<<<< HEAD
-  // Fisher-Yates shuffle
-=======
->>>>>>> 899e0a3 (Updated UI)
   for (let i = roles.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [roles[i], roles[j]] = [roles[j], roles[i]];
