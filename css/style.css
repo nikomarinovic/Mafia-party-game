@@ -555,8 +555,6 @@ input {
   .role-circle { width: 5rem; height: 5rem; }
   .screen { padding: 1rem; }
 }
-<<<<<<< HEAD
-=======
 /* ===================== FOOTER ===================== */
 .setup-footer {
   display: flex;
@@ -605,4 +603,3 @@ input {
   opacity: 0.7;
   letter-spacing: 0.05em;
 }
->>>>>>> 899e0a3 (Updated UI)
