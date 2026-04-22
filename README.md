@@ -81,5 +81,5 @@ Mafia Party Game does not accept feature implementations via pull requests. Feat
 ---
 
 <p align="center">
-  © 2026 Niko Marinović. All rights reserved.
+  © 2026 Niko Marinović, Luka Protrka. All rights reserved.
 </p>
